@@ -1,29 +1,11 @@
-# Gunakan image node sebagai base image
-FROM node:14 AS builder
+# Stage pertama: Gunakan image nginx sebagai base image
+FROM nginx:alpine AS builder
 
-# Set working directory
-WORKDIR /app
+# Set working directory di dalam image nginx
+WORKDIR /usr/share/nginx/html
 
-# Salin file package.json dan package-lock.json ke dalam kontainer
-COPY package*.json ./
-
-# Install dependensi
-RUN npm install
-
-# Salin seluruh proyek
+# Salin file HTML dan asset lainnya ke dalam image
 COPY . .
-
-# Bangun proyek HTML
-RUN npm run build
-
-# Stage kedua menggunakan image ringan nginx untuk meng-host hasil build HTML
-FROM nginx:alpine
-
-# Salin hasil build dari stage pertama ke dalam nginx public directory
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Ubah nama berkas utama menjadi index.html (sesuaikan dengan nama berkas utama Anda)
-RUN mv /usr/share/nginx/html/coffeeweb.html /usr/share/nginx/html/coffeeweb.html
 
 # Port yang akan di-EXPOSE
 EXPOSE 80
