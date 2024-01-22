@@ -8,7 +8,7 @@ WORKDIR /usr/share/nginx/html
 COPY . .
 
 # Port yang akan di-EXPOSE
-EXPOSE 80
+EXPOSE 89
 
 # Perintah yang akan dijalankan saat container dijalankan
 CMD ["nginx", "-g", "daemon off;"]
