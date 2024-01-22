@@ -1,25 +1,22 @@
 pipeline {
     agent any
-    environment {
-        DOCKER_IMAGE = 'some-content-nginx'
-        CONTAINER_NAME = 'some-nginx3'
-        PORT_MAPPING = '8080:80'  // Adjust the port mapping as needed
-    }
+  
 
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         // Clean workspace before checkout
-        //         deleteDir()
-        //         // Checkout the HTML source code from GitHub
-        //         git url: 'https://github.com/andrinahaura/project1.git'
-        //     }
-        // }
+   
+        stage('Checkout') {
+            steps {
+                deleteDir()
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/syerarindang/project_coffee.git']]])
+                        // Tambahkan pernyataan log untuk menampilkan direktori saat ini
+            }
+        }
+
         stage('Run Docker Container') {
             steps {
                 script {
-                    // Run Docker container based on the built image
-                    docker.image("${DOCKER_IMAGE}").run("-p ${PORT_MAPPING} --name ${CONTAINER_NAME}")
+        
+                    sh 'docker run --name web_server -d -p 8089:80 web_coffe'
                 }
             }
         }
