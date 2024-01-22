@@ -16,11 +16,11 @@ pipeline {
         //         git url: 'https://github.com/andrinahaura/project1.git'
         //     }
         // }
-            stage('Checkout') {
+            stage('Run Docker Container') {
                 steps {
-                    deleteDir()
-                    checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/syerarindang/project_coffee.git']]])
-                }
+                    script {
+                        docker.image("${DOCKER_IMAGE}").run()
+                    }
             }
 
         stage('Build Docker Image') {
