@@ -1,10 +1,9 @@
 pipeline {
     agent any
-
     environment {
-        DOCKER_IMAGE = 'yourusername/your-static-site:latest'
-        CONTAINER_NAME = 'your-container-name'
-        PORT_MAPPING = '8080:80'  // Adjust the port mapping as needed
+        DOCKER_IMAGE = 'some-content-nginx'
+        CONTAINER_NAME = 'some-nginx3'
+        PORT_MAPPING = '8081:80'  // Adjust the port mapping as needed
     }
 
     stages {
@@ -16,27 +15,6 @@ pipeline {
         //         git url: 'https://github.com/andrinahaura/project1.git'
         //     }
         // }
-            stage('Run Docker Container') {
-                steps {
-                    script {
-                        docker.image("${DOCKER_IMAGE}").run()
-                    }
-            }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    dir('project1') {
-                        // Build Docker image dengan konten HTML
-                        docker.build("${DOCKER_IMAGE}", '-f  Dockerfile .')
-                    }
-                    // // Build Docker image with the HTML content
-                    // docker.build("${DOCKER_IMAGE}", '-f Dockerfile .')
-                }
-            }
-        }
-
-    
         stage('Run Docker Container') {
             steps {
                 script {
