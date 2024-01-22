@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 deleteDir()
-                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/syerarindang/project_coffee.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: 'deploy']], userRemoteConfigs: [[url: 'https://github.com/syerarindang/project_coffee.git']]])
                         // Tambahkan pernyataan log untuk menampilkan direktori saat ini
             }
         }
